@@ -119,7 +119,7 @@ class PluginsfSimpleForumTopic extends BasesfSimpleForumTopic
     }
   }
 
-  public function save($con = null, $latestPost = null)
+  public function save(PropelPDO $con = null, $latestPost = null)
   {
     if(!$con)
     {
@@ -128,7 +128,7 @@ class PluginsfSimpleForumTopic extends BasesfSimpleForumTopic
 
     try
     {
-      $con->begin();
+      $con->beginTransaction();
       
       parent::save($con);
       
@@ -142,14 +142,14 @@ class PluginsfSimpleForumTopic extends BasesfSimpleForumTopic
      
       $con->commit();
     }
-    catch (Exception $e)
+    catch (PDOException $sqle)
     {
-      $con->rollback();
+      $con->rollBack();
       throw $e;
     }
   }
     
-  public function delete($con = null, $latestPost = null)
+  public function delete(PropelPDO $con = null, $latestPost = null)
   {
     if(!$con)
     {
@@ -158,7 +158,7 @@ class PluginsfSimpleForumTopic extends BasesfSimpleForumTopic
 
     try
     {
-      $con->begin();
+      $con->beginTransaction();
       
       parent::delete($con);
       
@@ -172,9 +172,9 @@ class PluginsfSimpleForumTopic extends BasesfSimpleForumTopic
       
       $con->commit();
     }
-    catch (Exception $e)
+    catch (PDOException $sqle)
     {
-      $con->rollback();
+      $con->rollBack();
       throw $e;
     }
   }

@@ -27,11 +27,11 @@ class PluginsfSimpleForumTopicPeer extends BasesfSimpleForumTopicPeer
     $c->addSelectColumn(sfSimpleForumTopicViewPeer::TOPIC_ID);
     $c->add(sfSimpleForumTopicViewPeer::USER_ID, $user_id);
     $c->add(sfSimpleForumTopicViewPeer::TOPIC_ID, $topic_ids, Criteria::IN);
-    $rs = sfSimpleForumTopicViewPeer::doSelectRS($c);
+    $stmt = sfSimpleForumTopicViewPeer::doSelectStmt($c);
     
-    while($rs->next())
+    while($res = $stmt->fetchColumn(1))
     {
-      $topic = $topic_hash[$rs->getInt(1)];
+      $topic = $topic_hash[$res];
       $topic->setIsNew(false);
     }
     

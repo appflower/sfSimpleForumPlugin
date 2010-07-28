@@ -48,17 +48,16 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
     $c->addSelectColumn(sfSimpleForumPostPeer::ID);
     $c->add(sfSimpleForumPostPeer::TOPIC_ID, $this->getTopicId());
     $c->addAscendingOrderByColumn(sfSimpleForumPostPeer::CREATED_AT);
-    $rs = sfSimpleForumPostPeer::doSelectRS($c);
+    $stmt = sfSimpleForumPostPeer::doSelectStmt($c);
     $messages = array();
-    while($rs->next())
-    {
-      $messages[] = $rs->getInt(1);
+    while($res = $stmt->fetchColumn(1)) {
+      $messages[] = $res;
     }
 
     return array_search($this->getId(), $messages);
   }
   
-  public function save($con = null, $preserveTopic = false)
+  public function save(PropelPDO $con = null, $preserveTopic = false)
   {
     if(!$con)
     {
@@ -67,7 +66,7 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
 
     try
     {
-      $con->begin();
+      $con->beginTransaction();
       
       $topic = $this->getsfSimpleForumTopic();
       if($this->isNew())
@@ -86,14 +85,14 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
       
       $con->commit();
     }
-    catch (Exception $e)
+    catch (PDOException $sqle)
     {
-      $con->rollback();
+      $con->rollBack();
       throw $e;
     }
   }
 
-  public function delete($con = null, $preserveTopic = true)
+  public function delete(PropelPDO $con = null, $preserveTopic = true)
   {
     if(!$con)
     {
@@ -102,7 +101,7 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
 
     try
     {
-      $con->begin();
+      $con->beginTransaction();
      
       parent::delete($con);
       
@@ -116,9 +115,9 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
      
       $con->commit();
     }
-    catch (Exception $e)
+    catch (PDOException $sqle)
     {
-      $con->rollback();
+      $con->rollBack();
       throw $e;
     }
   }

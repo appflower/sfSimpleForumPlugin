@@ -56,7 +56,7 @@ class PluginsfSimpleForumForumPeer extends BasesfSimpleForumForumPeer
     }
     
     sfSimpleForumForumPeer::addSelectColumns($c);
-    $startcol2 = (sfSimpleForumForumPeer::NUM_COLUMNS - sfSimpleForumForumPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+    $startcol2 = (sfSimpleForumForumPeer::NUM_COLUMNS - sfSimpleForumForumPeer::NUM_LAZY_LOAD_COLUMNS);
     
     sfSimpleForumCategoryPeer::addSelectColumns($c);
     $startcol3 = $startcol2 + sfSimpleForumCategoryPeer::NUM_COLUMNS;
@@ -68,23 +68,23 @@ class PluginsfSimpleForumForumPeer extends BasesfSimpleForumForumPeer
     
     $c->addJoin(sfSimpleForumForumPeer::LATEST_POST_ID, sfSimpleForumPostPeer::ID, Criteria::LEFT_JOIN);
     
-    $rs = BasePeer::doSelect($c, $con);
+    $stmt = BasePeer::doSelect($c, $con);
     $results = array();
     
-    while($rs->next())
+    while($row = $stmt->fetch(PDO::FETCH_NUM))
     {
       
       $omClass = sfSimpleForumForumPeer::getOMClass();
       
-      $cls = Propel::import($omClass);
+      $cls = Propel::importClass($omClass);
       $obj1 = new $cls();
-      $obj1->hydrate($rs);
+      $obj1->hydrate($row);
       
       $omClass = sfSimpleForumCategoryPeer::getOMClass();
       
-      $cls = Propel::import($omClass);
+      $cls = Propel::importClass($omClass);
       $obj2 = new $cls();
-      $obj2->hydrate($rs, $startcol2);
+      $obj2->hydrate($row, $startcol2);
       
       $newObject = true;
       for ($j=0, $resCount=count($results); $j < $resCount; $j++)
@@ -106,10 +106,10 @@ class PluginsfSimpleForumForumPeer extends BasesfSimpleForumForumPeer
       }
       
       $omClass = sfSimpleForumPostPeer::getOMClass();
-      
-      $cls = Propel::import($omClass);
+
+      $cls = Propel::importClass($omClass);
       $obj3 = new $cls();
-      $obj3->hydrate($rs, $startcol3);
+      $obj3->hydrate($row, $startcol3);
       
       $newObject = true;
       for ($j=0, $resCount=count($results); $j < $resCount; $j++) 
