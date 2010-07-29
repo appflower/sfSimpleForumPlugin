@@ -383,7 +383,7 @@ class BasesfSimpleForumActions extends sfActions
   }
   
   public function executeAddPost()
-  {    
+  {
     $topic = sfSimpleForumTopicPeer::retrieveByPK($this->getRequestParameter('topic_id'));
     $this->forward404Unless($topic);
     // We must check if the topic isn't locked

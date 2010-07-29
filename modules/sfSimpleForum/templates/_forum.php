@@ -10,10 +10,17 @@
     <?php if ($forum->getLatestPostId()): ?>
       <?php $latest_post = $forum->getsfSimpleForumPost(); ?>
       <?php echo link_to($latest_post->getTitle(), 'sfSimpleForum/post?id='.$latest_post->getId()) ?><br />
-      <?php echo __('%date% ago by %author%', array(
-        '%date%'   => distance_of_time_in_words($latest_post->getCreatedAt('U')),
-        '%author%' => link_to(get_partial('sfSimpleForum/author_name', array('author' => $latest_post->getAuthorName(), 'sf_cache_key' => $latest_post->getAuthorName())), 'sfSimpleForum/userLatestPosts?username='.$latest_post->getAuthorName())
-        ), 'sfSimpleForum') ?>
+      <?php
+        if($latest_post->getUserId() != NULL) {
+            $author = link_to(get_partial('sfSimpleForum/author_name', array('author' => $latest_post->getAuthorName(), 'sf_cache_key' => $latest_post->getAuthorName())), 'sfSimpleForum/userLatestPosts?username='.$latest_post->getAuthorName());
+        } else {
+            $author = $latest_post->getAuthorName();
+        }
+        echo __('%date% ago by %author%', array(
+            '%date%'   => distance_of_time_in_words($latest_post->getCreatedAt('U')),
+            '%author%' => $author
+            ), 'sfSimpleForum')
+        ?>
     <?php endif ;?>
   </td>
 </tr>

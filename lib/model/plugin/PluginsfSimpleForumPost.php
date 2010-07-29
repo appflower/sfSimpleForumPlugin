@@ -22,7 +22,9 @@ class PluginsfSimpleForumPost extends BasesfSimpleForumPost
   public function setUserId($id)
   {
     parent::setUserId($id);
-    $this->setAuthorName($this->getUser()->__toString());
+    if(sfContext::getInstance()->getUser()->isAuthenticated()) {
+        $this->setAuthorName($this->getUser()->__toString());
+    }
   }
   
   public function getTopic()

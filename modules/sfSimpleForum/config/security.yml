@@ -1,11 +1,11 @@
 createTopic:
-  is_secure:   on
+  is_secure:   off
 
 addTopic:
-  is_secure:   on
+  is_secure:   off
 
 addPost:
-  is_secure:   on
+  is_secure:   off
   
 deletePost:
   is_secure:   on

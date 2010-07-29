@@ -3,6 +3,19 @@ fillin:
   param:
     name: add_topic
 
+validators:
+  myFileValidator:
+    class:              sfFileValidator
+    param:
+      mime_types:
+        - 'image/jpeg'
+        - 'image/png'
+        - 'image/x-png'
+        - 'image/pjpeg'
+      mime_types_error: Only PNG and JPEG images are allowed
+      max_size:         512000
+      max_size_error:   Max size is 512Kb
+
 fields:
   body:
     required:
@@ -10,3 +23,16 @@ fields:
     sfStringValidator:
       min: 5
       min_error: Please enter at least 5 characters
+  
+  file:
+    file: true
+    myFileValidator:
+      
+  captcha:
+    required:
+      msg: Please enter the numbers in the captcha image
+    captchaValidator:
+      error: Incorrect code
+
+  author_name:
+    sfStringValidator:

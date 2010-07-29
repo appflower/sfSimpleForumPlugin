@@ -32,7 +32,8 @@ class sfSimpleForumTools
     $session = sfContext::getInstance()->getUser();
     if(!$session->isAuthenticated())
     {
-      throw new sfException('Attempting to retrieve the id of the connected user on an anonymous session');      
+//      throw new sfException('Attempting to retrieve the id of the connected user on an anonymous session');
+        return NULL;
     }
     if ($session instanceof sfGuardSecurityUser)
     {

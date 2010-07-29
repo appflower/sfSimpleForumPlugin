@@ -47,23 +47,14 @@
   
   <?php echo pager_navigation($post_pager, 'sfSimpleForum/topic?id='.$topic->getId().'&stripped_title='.$topic->getStrippedTitle()) ?>
   
-  <?php if (!$topic->getIsLocked() && $sf_user->isAuthenticated()): ?>
+  <?php if (!$topic->getIsLocked()): ?>
     
     <h2>
       <?php echo __('Post a reply', null, 'sfSimpleForum') ?>
     </h2>
     <?php include_partial('sfSimpleForum/add_post_form', array('topic' => $topic)) ?>
-      
-  <?php elseif (!$topic->getIsLocked() && !$sf_user->isAuthenticated()): ?>
     
-    <ul class="forum_actions">
-        <li><?php echo link_to(
-          __('Post a reply', null, 'sfSimpleForum'), 
-          sfConfig::get('sf_login_module').'/'.sfConfig::get('sf_login_action')
-        ) ?></li>
-    </ul>
-    
-  <?php elseif ($topic->getIsLocked() && $sf_user->isAuthenticated()): ?>
+  <?php elseif ($topic->getIsLocked()): // && $sf_user->isAuthenticated() ?>
     
     <?php echo __('This topic was locked by a forum moderator. No reply can be added.', null, 'sfSimpleForum') ?>
     
