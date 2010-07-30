@@ -22,6 +22,19 @@ class sfSimpleForumTools
     return call_user_func(array($user_peer, $method_name), $username);
   }
 
+  public static function getUserProfileByUserId($userId)
+  {
+    $user_class = sfConfig::get('app_sfSimpleForumPlugin_user_class', 'sfGuardUserProfile');
+    $user_peer = $user_class.'Peer';
+    $method_name = sfConfig::get('app_sfSimpleForumPlugin_user_retrieve_by_name_method', 'retrieveByPK');
+    if (!is_callable($user_peer, $method_name))
+    {
+      throw new sfException(sprintf('Unexistant method %s::%s() for retrieving a %s from its username', $user_peer, $method_name, $user_class));
+    }
+
+    return call_user_func(array($user_peer, $method_name), $userId);
+  }
+
   /**
    * Retrieves primary key of the connected user
    * 

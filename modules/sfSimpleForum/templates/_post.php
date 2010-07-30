@@ -9,7 +9,7 @@
         {
             echo link_to(
                 get_partial('sfSimpleForum/author_name', array('author' => $post->getAuthorName())),
-                'sfSimpleForum/userLatestPosts?username='.$post->getAuthorName()
+                'sfSimpleForum/userProfileLatestPosts?user_id='.$post->getUserId()
             );
         } else {
             echo $post->getAuthorName();
@@ -45,7 +45,7 @@
                             $dirPath = '/uploads/forum/'.$post->getId();
                             $file = $dirPath.'/'.$fileName;
                             
-                            echo link_to('file', $file, array('target' => '_blank'));
+                            echo link_to('Attached file', $file, array('target' => '_blank'));
                       }
                   }
               }

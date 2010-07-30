@@ -52,7 +52,14 @@
     <h2>
       <?php echo __('Post a reply', null, 'sfSimpleForum') ?>
     </h2>
-    <?php include_partial('sfSimpleForum/add_post_form', array('topic' => $topic)) ?>
+    <?php
+        include_partial('sfSimpleForum/add_post_form', array(
+                'topic'             => $topic,
+                'author_name_error' => $author_name_error,
+                'captcha_error'     => $captcha_error
+            )
+        );
+    ?>
     
   <?php elseif ($topic->getIsLocked()): // && $sf_user->isAuthenticated() ?>
     

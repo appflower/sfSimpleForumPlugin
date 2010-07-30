@@ -21,6 +21,13 @@
 
   <h1><?php echo __('Create a new topic', null, 'sfSimpleForum') ?></h1>
   
-  <?php include_partial('sfSimpleForum/add_post_form', array('forum' => $forum)) ?>
+  <?php
+    include_partial('sfSimpleForum/add_post_form', array(
+            'forum'             => $forum,
+            'author_name_error' => $author_name_error,
+            'captcha_error'     => $captcha_error
+        )
+    );
+  ?>
 
 </div>

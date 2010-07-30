@@ -27,12 +27,3 @@ fields:
   file:
     file: true
     myFileValidator:
-      
-  captcha:
-    required:
-      msg: Please enter the numbers in the captcha image
-    captchaValidator:
-      error: Incorrect code
-
-  author_name:
-    sfStringValidator:

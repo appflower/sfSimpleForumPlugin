@@ -64,7 +64,7 @@
                       'sf_cache_key' => $latest_post->getAuthorName()
                   )
               ),
-              'sfSimpleForum/userLatestPosts?username='.$latest_post->getAuthorName()
+              'sfSimpleForum/userProfileLatestPosts?user_id='.$latest_post->getUserId()
           );
       } else {
           $author = $latest_post->getAuthorName();
