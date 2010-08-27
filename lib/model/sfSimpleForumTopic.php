@@ -9,4 +9,7 @@
  */ 
 class sfSimpleForumTopic extends PluginsfSimpleForumTopic
 {
+    public function __toString() {
+        return $this->getTitle();
+    }
 }

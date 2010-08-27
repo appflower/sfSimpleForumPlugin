@@ -27,6 +27,6 @@
   
   <?php include_partial('sfSimpleForum/post_list', array('posts' => $post_pager->getResults(), 'include_topic' => true)) ?>
   
-  <?php echo pager_navigation($post_pager, 'sfSimpleForum/userLatestPosts?username='.$username) ?>
+  <?php echo pager_navigation($post_pager, 'sfSimpleForum/userLatestPosts?user_id='.$user->getUserId()) ?>
 
 </div>

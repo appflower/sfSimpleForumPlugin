@@ -12,7 +12,15 @@
       <?php echo link_to($latest_post->getTitle(), 'sfSimpleForum/post?id='.$latest_post->getId()) ?><br />
       <?php
         if($latest_post->getUserId() != NULL) {
-            $author = link_to(get_partial('sfSimpleForum/author_name', array('author' => $latest_post->getAuthorName(), 'sf_cache_key' => $latest_post->getAuthorName())), 'sfSimpleForum/userLatestPosts?username='.$latest_post->getAuthorName());
+            $author = link_to(
+                get_partial('sfSimpleForum/author_name',
+                    array(
+                        'author' => $latest_post->getAuthorName(),
+                        'sf_cache_key' => $latest_post->getAuthorName()
+                    )
+                ),
+                'sfSimpleForum/userLatestPosts?user_id='.$latest_post->getUserId()
+            );
         } else {
             $author = $latest_post->getAuthorName();
         }

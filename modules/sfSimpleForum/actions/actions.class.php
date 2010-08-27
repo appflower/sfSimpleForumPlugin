@@ -229,4 +229,19 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     );
     $this->feed_title = '';
   }
+
+  public function executeUserLatestPosts()
+  {
+    $this->user_id = $this->getRequestParameter('user_id');
+    $this->user = sfSimpleForumTools::getUserProfileByUserId($this->user_id);
+    $this->forward404Unless($this->user);
+    $this->username = $this->user->getFullName();
+
+    $this->post_pager = sfSimpleForumPostPeer::getForUserPager(
+      $this->user_id,
+      $this->getRequestParameter('page', 1),
+      sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
+    );
+    $this->feed_title = '';//$this->getUserLatestPostsFeedTitle();
+  }
 }
