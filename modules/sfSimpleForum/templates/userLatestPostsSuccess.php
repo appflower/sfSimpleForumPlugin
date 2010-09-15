@@ -17,11 +17,11 @@
   <?php include_partial('sfSimpleForum/figures', array(
     'display_topic_link'  => true,
     'nb_topics'           => sfSimpleForumTopicPeer::countForUser($user->getUserId()),
-    'topic_rule'          => 'sfSimpleForum/userLatestTopics?username='.$username,
+    'topic_rule'          => 'sfSimpleForum/userLatestTopics?user_id='.$user->getUserId(),
     'display_post_link'   => false,
     'nb_posts'            => $post_pager->getNbResults(),
     'post_rule'           => '',
-    'feed_rule'           => 'sfSimpleForum/userLatestPostsFeed?username='.$username,
+    'feed_rule'           => 'sfSimpleForum/userLatestPostsFeed?user_id='.$user->getUserId(),
     'feed_title'          => $feed_title
   )) ?>
   

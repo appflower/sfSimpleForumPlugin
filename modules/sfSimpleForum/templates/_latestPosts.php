@@ -5,10 +5,17 @@
   <?php foreach ($posts as $post): ?>
     <li>
       <?php echo link_to($post->getTitle(), 'sfSimpleForum/post?id='.$post->getId()) ?> <br />
-    <?php echo __('%date% ago by %author%', array(
-      '%date%'   => distance_of_time_in_words($post->getCreatedAt('U')),
-      '%author%' => link_to($post->getAuthorName(), 'sfSimpleForum/latestUserPosts?username='.$post->getAuthorName())
-      ), 'sfSimpleForum') ?>
+    <?php
+//        echo __('%date% ago by %author%', array(
+//          '%date%'   => distance_of_time_in_words($post->getCreatedAt('U')),
+//          '%author%' => link_to($post->getAuthorName(), 'sfSimpleForum/latestUserPosts?username='.$post->getAuthorName())  //I was not sure if this link would work
+//          ), 'sfSimpleForum');
+        
+        echo __('%date% ago by %author%', array(
+          '%date%'   => distance_of_time_in_words($post->getCreatedAt('U')),
+          '%author%' => $post->getAuthorName()
+          ), 'sfSimpleForum');
+    ?>
     </li>
   <?php endforeach; ?>
   </ol>

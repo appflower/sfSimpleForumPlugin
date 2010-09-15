@@ -227,7 +227,7 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       $this->getRequestParameter('page', 1),
       sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
     );
-    $this->feed_title = '';
+    $this->feed_title = '';//$this->getUserLatestPostsFeedTitle();
   }
 
   public function executeUserLatestPosts()
@@ -243,5 +243,39 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
     );
     $this->feed_title = '';//$this->getUserLatestPostsFeedTitle();
+  }
+
+  public function executeUserLatestTopics()
+  {
+    $this->user_id = $this->getRequestParameter('user_id');
+    $this->user = sfSimpleForumTools::getUserProfileByUserId($this->user_id);
+    $this->forward404Unless($this->user);
+    $this->username = $this->user->getFullName();
+
+    $this->topics_pager = sfSimpleForumTopicPeer::getForUserPager(
+      $this->user_id,
+      $this->getRequestParameter('page', 1),
+      sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
+    );
+
+    $this->feed_title = '';//$this->getUserLatestTopicsFeedTitle();
+  }
+
+  protected function getUserLatestPostsFeedTitle()
+  {
+    sfLoader::loadHelpers('I18N');
+    return __('Latest messages from %forums% by %username%', array(
+      '%forums%'   => sfConfig::get('app_sfSimpleForumPlugin_forum_name', 'Forums'),
+      '%username%' => $this->user->getFullName(),
+    ));
+  }
+
+  protected function getUserLatestTopicsFeedTitle()
+  {
+    sfLoader::loadHelpers('I18N');
+    return __('Latest topics from %forums% by %username%', array(
+      '%forums%'   => sfConfig::get('app_sfSimpleForumPlugin_forum_name', 'Forums'),
+      '%username%' => $this->user->getFullName(),
+    ));
   }
 }

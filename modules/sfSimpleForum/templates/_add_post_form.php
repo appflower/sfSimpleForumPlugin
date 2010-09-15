@@ -28,8 +28,14 @@
     </div>
 
     <div class="row">
-        <?php echo label_for('forum', __('Forum', null, 'sfSimpleForum')) ?>
-        <?php echo select_tag('forum_name', options_for_select(sfSimpleForumForumPeer::getAllAsArray())) ?>
+        <?php
+            echo label_for('forum', __('Forum', null, 'sfSimpleForum'));
+            $defaultForum = '';
+            if($forum) {
+                $defaultForum = $forum->getName();
+            }
+            echo select_tag('forum_name', options_for_select(sfSimpleForumForumPeer::getAllAsArray(), $defaultForum));
+        ?>
     </div>
 
   <?php endif; ?>
