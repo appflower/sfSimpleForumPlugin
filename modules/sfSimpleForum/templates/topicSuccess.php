@@ -52,6 +52,8 @@
     <h2>
       <?php echo __('Post a reply', null, 'sfSimpleForum') ?>
     </h2>
+
+    <div class="sf_apply">
     <?php
         include_partial('sfSimpleForum/add_post_form', array(
                 'topic'             => $topic,
@@ -60,7 +62,8 @@
             )
         );
     ?>
-    
+    </div>
+
   <?php elseif ($topic->getIsLocked()): // && $sf_user->isAuthenticated() ?>
     
     <?php echo __('This topic was locked by a forum moderator. No reply can be added.', null, 'sfSimpleForum') ?>

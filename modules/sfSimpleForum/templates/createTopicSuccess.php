@@ -20,7 +20,8 @@
 <div class="sfSimpleForum">
 
   <h1><?php echo __('Create a new topic', null, 'sfSimpleForum') ?></h1>
-  
+
+  <div class="sf_apply">
   <?php
     include_partial('sfSimpleForum/add_post_form', array(
             'forum'             => $forum,
@@ -29,5 +30,6 @@
         )
     );
   ?>
+  </div>
 
 </div>

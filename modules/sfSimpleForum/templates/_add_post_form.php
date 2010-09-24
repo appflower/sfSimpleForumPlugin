@@ -1,4 +1,4 @@
-<?php echo form_tag('sfSimpleForum/add' . (isset($topic) ? 'Post' : 'Topic'), 'multipart=true id=add_topic name=add_topic') ?>
+<?php echo form_tag('sfSimpleForum/add' . (isset($topic) ? 'Post' : 'Topic'), 'multipart=true id=add_topic class=jqtransform name=add_topic') ?>
 
   <?php
     if(!$sf_user->isAuthenticated())
@@ -8,9 +8,10 @@
                     ↓&nbsp; The author cannot be left blank. Please enter some text &nbsp;↓
                  </div>';
         }
-        echo '<div class="row">';
-            echo label_for('author_name', __('Author', null, 'sfSimpleForum'));
-            echo input_tag('author_name', '', 'id=topic_author_name');
+        
+        echo '<div class="rowElem">';
+            echo label_for('author_name', __('Author', null));
+            echo input_tag('author_name', '', 'style=width:240px');
         echo '</div>';
     }
   ?>
@@ -22,12 +23,12 @@
   <?php else: ?>
 
     <?php echo form_error('title') ?>
-    <div class="row">
+    <div class="rowElem">
         <?php echo label_for('title', __('Title', null, 'sfSimpleForum')) ?>
         <?php echo input_tag('title', '', 'id=topic_title') ?>
     </div>
 
-    <div class="row">
+    <div class="rowElem">
         <?php
             echo label_for('forum', __('Forum', null, 'sfSimpleForum'));
             $defaultForum = '';
@@ -41,13 +42,14 @@
   <?php endif; ?>
   
   <?php echo form_error('body') ?>
-  <div class="row">
+  <div class="rowElem">
       <?php echo label_for('body', __('Body', null, 'sfSimpleForum')) ?>
-      <?php echo textarea_tag('body', '', 'id=topic_body') ?>
+      <?php echo textarea_tag('body', '', 'id=topic_body cols="25" rows="8"') ?>
+      <div class="clear"></div>
   </div>
 
-  <div class="row">
-      <?php echo form_error('file') ?>
+  <?php echo form_error('file') ?>
+  <div class="rowElem">
       <?php echo label_for('file', __('Attach File', null, 'sfSimpleForum')) ?>
       <?php echo input_file_tag('file') ?>
   </div>
@@ -73,7 +75,7 @@
                     ↓&nbsp; '.$captcha_error.' &nbsp;↓
                  </div>';
           }
-          echo '<div class="row">';
+          echo '<div class="rowElem">';
               echo label_for('captcha', __('Verify', null, 'sfSimpleForum'));
               echo '<img src="'.url_for('sfCaptcha/index').'" alt="captcha" />';
               echo input_tag('captcha');
@@ -81,7 +83,12 @@
       }
     ?>
 
-  <?php echo submit_tag(__('Post', null, 'sfSimpleForum'), 'id=topic_submit') ?>
+    <div class="rowElem">
+        <label>&nbsp;</label>
+        <?php echo submit_tag(__('Post', null, 'sfSimpleForum'), 'id=topic_submit') ?>
+        <div class="clear"></div>
+    </div>
+  
 
   <br style ="clear:both"/>
 </form>

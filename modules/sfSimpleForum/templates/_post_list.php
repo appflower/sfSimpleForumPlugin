@@ -1,4 +1,4 @@
-<table id="messages">
+<div id="messages">
   <?php foreach ($posts as $post): ?>
     <?php include_partial('sfSimpleForum/post', array(
       'post' => $post,
@@ -7,4 +7,5 @@
       'sf_cache_key'      => $post->getId().'_'.$sf_user->hasCredential('moderator')
     )) ?>
   <?php endforeach; ?>
-</table>
+</div>
+<div>&nbsp;</div>
