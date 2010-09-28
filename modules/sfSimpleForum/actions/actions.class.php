@@ -227,7 +227,7 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       $this->getRequestParameter('page', 1),
       sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
     );
-    $this->feed_title = '';//$this->getUserLatestPostsFeedTitle();
+    $this->feed_title = $this->getUserLatestPostsFeedTitle();
   }
 
   public function executeUserLatestPosts()
@@ -242,7 +242,25 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       $this->getRequestParameter('page', 1),
       sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
     );
-    $this->feed_title = '';//$this->getUserLatestPostsFeedTitle();
+    $this->feed_title = $this->getUserLatestPostsFeedTitle();
+  }
+
+  public function executeUserLatestPostsFeed()
+  {
+    $this->user_id = $this->getRequestParameter('user_id');
+    $this->user = sfSimpleForumTools::getUserProfileByUserId($this->user_id);
+    $this->forward404Unless($this->user);
+    $this->username = $this->user->getFullName();
+
+    $this->posts = sfSimpleForumPostPeer::getForUser(
+      $this->user_id,
+      sfConfig::get('app_sfSimpleForumPlugin_feed_max', 10)
+    );
+
+    $this->rule = $this->getModuleName().'/userLatestPosts?user_id='.$this->user_id;
+    $this->feed_title = $this->getUserLatestPostsFeedTitle();
+
+    return $this->renderText($this->getFeedFromObjects($this->posts));
   }
 
   public function executeUserLatestTopics()
@@ -258,7 +276,24 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       sfConfig::get('app_sfSimpleForumPlugin_max_per_page', 10)
     );
 
-    $this->feed_title = '';//$this->getUserLatestTopicsFeedTitle();
+    $this->feed_title = $this->getUserLatestTopicsFeedTitle();
+  }
+
+  public function executeUserLatestTopicsFeed()
+  {
+    $this->user_id = $this->getRequestParameter('user_id');
+    $this->user = sfSimpleForumTools::getUserProfileByUserId($this->user_id);
+    $this->forward404Unless($this->user);
+    $this->username = $this->user->getFullName();
+
+    $this->topics = sfSimpleForumTopicPeer::getForUser(
+      $this->user_id,
+      sfConfig::get('app_sfSimpleForumPlugin_feed_max', 10)
+    );
+    $this->rule = $this->getModuleName().'/latestUserTopics?user_id='.$this->user_id;
+    $this->feed_title = $this->getUserLatestTopicsFeedTitle();
+
+    return $this->renderText($this->getFeedFromObjects($this->topics));
   }
 
   protected function getUserLatestPostsFeedTitle()
