@@ -8,4 +8,4 @@
     )) ?>
   <?php endforeach; ?>
 </div>
-<div>&nbsp;</div>
+<div style="clear:both">&nbsp;</div>

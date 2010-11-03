@@ -49,7 +49,7 @@
   
   <?php if (!$topic->getIsLocked()): ?>
     
-    <h2>
+    <h2 class="reply">
       <?php echo __('Post a reply', null, 'sfSimpleForum') ?>
     </h2>
 
