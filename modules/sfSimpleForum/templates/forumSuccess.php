@@ -10,8 +10,10 @@
 <?php endif; ?>
 
 <div class="sfSimpleForum">
-  
+
   <h1><?php echo $forum->getName() ?></h1>
+  
+  <?php include_slot('forum_navigation') ?>
 
   <ul class="forum_actions">
     <li><?php echo link_to(__('New topic', null, 'sfSimpleForum'), 'sfSimpleForum/createTopic?forum_name='.$forum->getStrippedName()) ?></li>

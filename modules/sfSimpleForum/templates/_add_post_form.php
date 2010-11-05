@@ -49,7 +49,7 @@
   </div>
 
   <?php echo form_error('file') ?>
-  <div class="rowElem">
+  <div class="rowElem fileInput">
       <?php echo label_for('file', __('Attach File', null, 'sfSimpleForum')) ?>
       <?php echo input_file_tag('file') ?>
   </div>
@@ -84,7 +84,7 @@
     ?>
 
     <div class="rowElem">
-        <label>&nbsp;</label>
+        <label style="background: inherit; border:0">&nbsp;</label>
         <?php echo submit_tag(__('Post', null, 'sfSimpleForum'), 'id=topic_submit') ?>
         <div class="clear"></div>
     </div>

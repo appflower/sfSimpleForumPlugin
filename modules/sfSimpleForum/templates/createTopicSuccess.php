@@ -21,6 +21,12 @@
 
   <h1><?php echo __('Create a new topic', null, 'sfSimpleForum') ?></h1>
 
+  <div class="breadcrumb_center">
+      <?php include_slot('forum_navigation') ?>
+  </div>
+
+  <div style="clear:both"></div>
+
   <div class="sf_apply">
   <?php
     include_partial('sfSimpleForum/add_post_form', array(

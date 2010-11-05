@@ -32,8 +32,12 @@
       ) ?></li>
     <?php endif ?>
   </ul>
-    
-  <div class="forum_figures">
+
+  <div class="breadcrumb_center">
+      <?php include_slot('forum_navigation') ?>
+  </div>
+
+  <div class="forum_figures_center">
     <?php echo format_number_choice('[1]1 message, no reply|(1,+Inf]%posts% messages', array('%posts%' => $post_pager->getNbResults()), $post_pager->getNbResults(), 'sfSimpleForum') ?> 
     <?php if (sfConfig::get('app_sfSimpleForumPlugin_count_views', true)): ?>
     - <?php echo format_number_choice('[0,1]1 view|(1,+Inf]%views% views', array('%views%' => $topic->getNbViews()), $topic->getNbViews(), 'sfSimpleForum') ?>

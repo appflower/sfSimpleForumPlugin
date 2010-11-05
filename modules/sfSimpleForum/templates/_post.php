@@ -23,12 +23,12 @@
   </div>
   <div class="rsb">
     <?php if ($include_topic): ?>
-
-      <?php echo link_to($post->getsfSimpleForumForum()->getName(), 'sfSimpleForum/forum?forum_name='.$post->getsfSimpleForumForum()->getStrippedName()) ?>
-     &raquo;
-      <?php echo link_to($post->getTitle(), 'sfSimpleForum/post?id='.$post->getId()) ?>
+      <div class="last_message_topic">
+          <?php echo link_to($post->getsfSimpleForumForum()->getName(), 'sfSimpleForum/forum?forum_name='.$post->getsfSimpleForumForum()->getStrippedName()) ?>
+          &raquo;
+          <?php echo link_to($post->getTitle(), 'sfSimpleForum/post?id='.$post->getId()) ?>
+      </div>
       <?php endif ?>
-
 
       <?php echo $post->getContent() ?> 
 

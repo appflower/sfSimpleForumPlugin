@@ -13,18 +13,24 @@
 <div class="sfSimpleForum">
   
   <h1><?php echo $title ?></h1>
-  
-  <?php include_partial('sfSimpleForum/figures', array(
-    'display_topic_link'  => $nb_topics,
-    'nb_topics'           => $nb_topics,
-    'topic_rule'          => 'sfSimpleForum/latestTopics',
-    'display_post_link'   => false,
-    'nb_posts'            => $post_pager->getNbResults(),
-    'post_rule'           => '',
-    'feed_rule'           => 'sfSimpleForum/latestPostsFeed',
-    'feed_title'          => $feed_title
-  )) ?>
-  
+
+  <div class="breadcrumb_center">
+      <?php include_slot('forum_navigation') ?>
+  </div>
+
+  <div class="forum_figures_center">
+      <?php include_partial('sfSimpleForum/figures', array(
+        'display_topic_link'  => $nb_topics,
+        'nb_topics'           => $nb_topics,
+        'topic_rule'          => 'sfSimpleForum/latestTopics',
+        'display_post_link'   => false,
+        'nb_posts'            => $post_pager->getNbResults(),
+        'post_rule'           => '',
+        'feed_rule'           => 'sfSimpleForum/latestPostsFeed',
+        'feed_title'          => $feed_title
+      )) ?>
+  </div>
+
   <?php include_partial('sfSimpleForum/post_list', array('posts' => $post_pager->getResults(), 'include_topic' => true)) ?>
   
   <?php echo pager_navigation($post_pager, 'sfSimpleForum/latestPosts') ?>

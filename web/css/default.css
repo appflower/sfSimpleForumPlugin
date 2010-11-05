@@ -19,10 +19,17 @@
 
 .sfSimpleForum .forum_figures
 {
-  width: 600px;
+/*  width: 600px;*/
+  float: right;
   text-align: right;
   margin: 0 0 10px 0;
 }
+
+div.forum_figures_center {
+    text-align:right;
+    margin-right: 210px;
+}
+
 table#fora, table#threads, table#messages
 { 
   border-collapse: collapse;
@@ -277,4 +284,20 @@ form#add_topic div.option
 form#add_topic div.option label
 {
 	display:inline;
+}
+
+/* Breadcrumb */
+div.breadcrumb_center {
+    width:250px;
+    float: left;
+    margin-left: 210px;
+    margin-bottom: 8px;
+}
+
+div.breadcrumb_center ul {
+    padding: 0;
+}
+
+div.breadcrumb_center a:hover {
+    color: orange;
 }
