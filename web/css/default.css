@@ -166,8 +166,12 @@ ul.forum_actions li a:visited
 
 ul.post_actions
 {
+  clear:both;
+  float:right;
   list-style: none;
   text-align: right;
+  margin-top: 5px;
+  margin-bottom:0;
 }
 
 ul.post_actions li
@@ -277,9 +281,7 @@ form#add_topic input#topic_submit
 }
 
 form#add_topic div.option
-{
-  padding:5px 0;
-}
+{}
 
 form#add_topic div.option label
 {

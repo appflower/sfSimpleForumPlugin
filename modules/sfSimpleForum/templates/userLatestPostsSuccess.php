@@ -13,7 +13,12 @@
 <div class="sfSimpleForum">
   
   <h1><?php echo $title ?></h1>
-  
+
+  <div class="breadcrumb_center">
+      <?php include_slot('forum_navigation') ?>
+  </div>
+
+  <div class="forum_figures_center">
   <?php include_partial('sfSimpleForum/figures', array(
     'display_topic_link'  => true,
     'nb_topics'           => sfSimpleForumTopicPeer::countForUser($user->getUserId()),
@@ -24,7 +29,8 @@
     'feed_rule'           => 'sfSimpleForum/userLatestPostsFeed?user_id='.$user->getUserId(),
     'feed_title'          => $feed_title
   )) ?>
-  
+  </div>
+
   <?php include_partial('sfSimpleForum/post_list', array('posts' => $post_pager->getResults(), 'include_topic' => true)) ?>
   
   <?php echo pager_navigation($post_pager, 'sfSimpleForum/userLatestPosts?user_id='.$user->getUserId()) ?>

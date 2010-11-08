@@ -121,4 +121,28 @@ class sfSimpleForumTools
 
     return $text;
   }
+
+    public static function unlinkRecursive($dir)
+    {
+        if(!$dh = @opendir($dir))
+        {
+            return;
+        }
+        while (false !== ($obj = readdir($dh)))
+        {
+            if($obj == '.' || $obj == '..')
+            {
+                continue;
+            }
+
+            if (!@unlink($dir . '/' . $obj))
+            {
+                unlinkRecursive($dir.'/'.$obj, true);
+            }
+        }
+
+        @rmdir($dir);
+
+        closedir($dh);
+    }
 }
