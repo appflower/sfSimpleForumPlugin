@@ -86,7 +86,10 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
 
 
   public function executeAddPost()
-  {   
+  {
+      //first is validated body from addPost.yml. We should get rid of validation yml files
+      $this->handleAdditionalErrorAddPost();
+
     $topic = sfSimpleForumTopicPeer::retrieveByPK($this->getRequestParameter('topic_id'));
     $this->forward404Unless($topic);
     // We must check if the topic isn't locked
@@ -106,23 +109,6 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $this->redirectToPost($post);
   }
 
-  public function handleErrorAddTopic()
-  {
-    if(!$this->getUser()->isAuthenticated()) {
-        if( trim($this->getRequestParameter('author_name')) == '' ) {
-            $this->getRequest()->setParameter('author_name_error', 'error');
-        }
-        if( trim($this->getRequestParameter('captcha')) == '' ) {
-            $this->getRequest()->setParameter('captcha_error', 'Please enter the numbers in the captcha image');
-        } else if( !$this->validateCaptcha($this->getRequestParameter('captcha')) ) {
-            $this->getRequest()->setParameter('captcha_error', 'Incorrect code');
-        }
-    }
-
-    $this->getRequest()->setAttribute('topic', sfSimpleForumPostPeer::retrieveByPk($this->getRequestParameter('topic_id')));
-    $this->forward('sfSimpleForum', 'createTopic');
-  }
-
   public function handleAdditionalErrorAddTopic()
   {
     if(!$this->getUser()->isAuthenticated()) {
@@ -133,26 +119,6 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
             $this->forward('sfSimpleForum', 'createTopic');
         }
     }
-  }
-
-  public function handleErrorAddPost()
-  {
-    $this->handleAdditionalErrorAddPost();
-
-    if(!$this->getUser()->isAuthenticated()) {
-        if( trim($this->getRequestParameter('author_name')) == '' ) {
-            $this->getRequest()->setParameter('author_name_error', 'error');
-        }
-        if( trim($this->getRequestParameter('captcha')) == '' ) {
-            $this->getRequest()->setParameter('captcha_error', 'Please enter the numbers in the captcha image');
-        } else if( !$this->validateCaptcha($this->getRequestParameter('captcha')) ) {
-            $this->getRequest()->setParameter('captcha_error', 'Incorrect code');
-        }
-
-    }
-    
-    $this->getRequest()->setParameter('id', $this->getRequestParameter('topic_id'));
-    $this->forward('sfSimpleForum', 'topic');
   }
 
   public function handleAdditionalErrorAddPost()
