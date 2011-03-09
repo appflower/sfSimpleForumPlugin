@@ -53,6 +53,10 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $post->save();
 
     $this->saveFile('file', $post);
+    
+    $configuration = sfProjectConfiguration::getActive();
+    $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
+	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_email'), $body);
 
     $this->redirectToPost($post);
   }
@@ -96,7 +100,7 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $this->forward404If($topic->getIsLocked());
 
     $post = new sfSimpleForumPost();
-    $post->setContent($this->getRequestParameter('body'));
+    $post->setContent(strip_tags($this->getRequestParameter('body')));
     $post->setUserId(sfSimpleForumTools::getConnectedUserId());
     if(!sfContext::getInstance()->getUser()->isAuthenticated()) {
         $post->setAuthorName(trim($this->getRequestParameter('author_name')));
@@ -105,6 +109,10 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $post->save();
 
     $this->saveFile('file', $post);
+    
+    $configuration = sfProjectConfiguration::getActive();
+    $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
+	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_email'), $body);
 
     $this->redirectToPost($post);
   }
