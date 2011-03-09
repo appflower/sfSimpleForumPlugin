@@ -56,7 +56,7 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     
     $configuration = sfProjectConfiguration::getActive();
     $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
-	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_email'), $body);
+	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_forum_notification_email'), $body);
 
     $this->redirectToPost($post);
   }
@@ -112,7 +112,7 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     
     $configuration = sfProjectConfiguration::getActive();
     $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
-	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_email'), $body);
+	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_forum_notification_email'), $body);
 
     $this->redirectToPost($post);
   }
