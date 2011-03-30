@@ -49,15 +49,15 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $post->setsfSimpleForumTopic($topic);
     if(!sfContext::getInstance()->getUser()->isAuthenticated()) {
         $post->setAuthorName($this->getRequestParameter('author_name'));
+        $post->setAuthorEmail(trim($this->getRequestParameter('author_email')));
     }
     $post->save();
 
     $this->saveFile('file', $post);
     
-    $configuration = sfProjectConfiguration::getActive();
-    $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
-	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_forum_notification_email'), $body);
-
+    // send email notifications 
+    $post->sendEmailNotifications();
+    
     $this->redirectToPost($post);
   }
 
@@ -104,15 +104,15 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
     $post->setUserId(sfSimpleForumTools::getConnectedUserId());
     if(!sfContext::getInstance()->getUser()->isAuthenticated()) {
         $post->setAuthorName(trim($this->getRequestParameter('author_name')));
+        $post->setAuthorEmail(trim($this->getRequestParameter('author_email')));
     }
     $post->setTopicId($topic->getId());
     $post->save();
 
     $this->saveFile('file', $post);
     
-    $configuration = sfProjectConfiguration::getActive();
-    $body = $this->getPartial('mail/forumNotification', array('post'=>$post));
-	$configuration->sendMail('Appflower.com forum notification', sfConfig::get('app_appflower_forum_notification_email'), $body);
+    // send email notifications 
+    $post->sendEmailNotifications();
 
     $this->redirectToPost($post);
   }
@@ -158,6 +158,18 @@ class sfSimpleForumActions extends BasesfSimpleForumActions
       {
           $this->getRequest()->setParameter('captcha_error', 'Incorrect code');
           $error = true;
+      }
+      
+      $author_email = $this->getRequestParameter("author_email"); 
+      if (!empty($author_email))
+      {
+		  $myValidator = new sfEmailValidator($this->getContext());
+	      $errorMsg = "error";
+	      if (!$myValidator->execute($author_email, $errorMsg)) 
+	      {
+	      	 $this->getRequest()->setError('author_email', 'Invalid email address.');
+	      	 $error = true;
+	      }
       }
 
       return $error;
