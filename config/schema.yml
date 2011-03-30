@@ -51,6 +51,7 @@ propel:
     # performance enhancers
     forum_id:      { type: integer, foreignTable: sf_simple_forum_forum, foreignReference: id, onDelete: cascade }
     author_name:   varchar(255)
+    author_email:  varchar(255)
     
   sf_simple_forum_topic_view:
     _attributes:   { phpName: sfSimpleForumTopicView, package: plugins.sfSimpleForumPlugin.lib.model }
