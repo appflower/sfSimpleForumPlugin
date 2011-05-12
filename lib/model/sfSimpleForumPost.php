@@ -50,8 +50,10 @@ class sfSimpleForumPost extends PluginsfSimpleForumPost
 	      	$errorMsg = "error";
 	      	if ($myValidator->execute($email, $errorMsg)) 
 	      	{
-			    $body = get_partial('mail/forumNotification', array('post'=>$this));
-				$configuration->sendMail('Appflower.com forum notification', $email, $body);
+	      		$subject = 'Forum notification';
+				$rand = md5(time());
+			    $body = get_partial('mail/forumNotification', array('post'=>$this, 'title'=>$subject, 'rand'=>$rand));
+				$configuration->sendMail('Forum notification', $email, $body, null, $rand);
 	      	}
     	}
     	
