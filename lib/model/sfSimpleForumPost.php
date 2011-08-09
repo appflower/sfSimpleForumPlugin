@@ -46,15 +46,19 @@ class sfSimpleForumPost extends PluginsfSimpleForumPost
     	$configuration->loadHelpers('Partial'); 
     	foreach ($user_emails as $email)
     	{
-    		$myValidator = new sfEmailValidator(sfContext::getInstance());
-	      	$errorMsg = "error";
-	      	if ($myValidator->execute($email, $errorMsg)) 
-	      	{
-	      		$subject = 'Forum notification';
-				$rand = md5(time());
-			    $body = get_partial('mail/forumNotification', array('post'=>$this, 'title'=>$subject, 'rand'=>$rand));
-				$configuration->sendMail('Forum notification', $email, $body, null, $rand);
-	      	}
+            if ($email) {
+            	$rand = md5(time());
+            	
+                $parameters = array(
+                    'email'   => $email,
+                    'subject' => 'Forum notification',
+                    'from'    => 'Appflower Team',
+                    'post'    => $this,
+                    'rand'    => $rand
+                );
+
+                afAutomailer::saveMail('mail', 'forumNotification', $parameters);
+            }
     	}
     	
     }
