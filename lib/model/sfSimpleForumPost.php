@@ -47,17 +47,16 @@ class sfSimpleForumPost extends PluginsfSimpleForumPost
     	foreach ($user_emails as $email)
     	{
             if ($email) {
-            	$rand = md5(time());
             	
                 $parameters = array(
                     'email'   => $email,
                     'subject' => 'Forum notification',
                     'from'    => 'Appflower Team',
                     'post'    => $this,
-                    'rand'    => $rand
+                    'rand'    => md5(time())
                 );
-
-                afAutomailer::saveMail('mail', 'forumNotification', $parameters);
+                afAutomailerHelper::saveMail('mail', 'forumNotification', $parameters);
+                
             }
     	}
     	
