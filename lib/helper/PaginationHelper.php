@@ -14,19 +14,16 @@ function pager_navigation($pager, $uri, $options = array())
   $pages_displayed = sfConfig::get('app_sfSimpleForumPlugin_pages_displayed', 5);
   
   $uri .= (preg_match('/\?/', $uri) ? '&' : '?').'page=';
+
+  // First page
+  if ($pager->getPage() > $pages_displayed + 1)
+  {
+    $navigation .= '<a href="'.url_for($uri.'1').'"> <li class="first symbol"> </li> </a>';
+  }  
   
   // Previous page
-  $navigation .= '<li class="begin">'.(($pager->getPage() != 1) ? link_to(__('Previous'), $uri.$pager->getPreviousPage()) : '&nbsp;').'</li>';
-  
-  // First page
-  if ($pager->getPage() > $pages_displayed + 1 )
-  {
-    $navigation .= '<li>'.link_to('1', $uri.'1').'</li>';
-    if($pager->getPage() > $pages_displayed + 2)
-    {
-      $navigation .= '<li>&nbsp;..&nbsp</li>';
-    }
-  }
+  if ($pager->getPage() != 1)
+    $navigation .= '<a href="'.url_for($uri.$pager->getPreviousPage()).'"> <li class="prev symbol"> </li> </a>';
   
   // Pages one by one
   $max_page = min($pager->getPage() + $pages_displayed, $pager->getLastPage());
@@ -36,28 +33,23 @@ function pager_navigation($pager, $uri, $options = array())
   {
     if($page == $pager->getPage())
     {
-      $navigation .= '<li class="current">'.$page.'</li>'; 
+      $navigation .= '<a href="'.url_for($uri.$page).'"> <li class="active">'.$page.'</li> </a>';
     }
     else
     {
-      $navigation .= '<li>'.link_to($page, $uri.$page).'</li>';
+      $navigation .= '<a href="'.url_for($uri.$page).'"> <li>'.$page.'</li> </a>';
     }
-  }
-  
-  // Last page
-  if ($pager->getPage() < ($pager->getLastPage() - $pages_displayed))
-  {
-    if ($pager->getPage() < ($pager->getLastPage() - $pages_displayed - 1 ))
-    {
-      $navigation .= '<li>&nbsp;..&nbsp;';
-    }
-    $navigation .= '<li>'.link_to($pager->getLastPage(), $uri.$pager->getLastPage()).'</li>';
   }
   
   // Next page
-  $navigation .= '<li class="end">'.(($pager->getPage() != $pager->getLastPage()) ? link_to(__('Next'), $uri.$pager->getNextPage()) : '&nbsp;').'</li>';
+  if ($pager->getPage() != $pager->getLastPage())
+    $navigation .= '<a href="'.url_for($uri.$pager->getNextPage()).'"> <li class="next symbol"> </li> </a>';
+    
+  // Last page
+  if ($pager->getPage() < ($pager->getLastPage() - $pages_displayed))
+  {
+    $navigation .= '<a href="'.url_for($uri.$pager->getLastPage()).'"> <li class="last symbol"></li> </a>';
+  }
   
-  $css_class = isset($options['class']) ? $options['class'] : 'pagination';
-  
-  return '<div class="'.$css_class.'"><ul>'.$navigation.'</ul></div>';
+  return '<div class="'.$css_class.'" id="pagination"><ul>'.$navigation.'</ul></div>';
 }
