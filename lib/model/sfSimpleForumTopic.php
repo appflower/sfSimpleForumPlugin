@@ -28,4 +28,9 @@ class sfSimpleForumTopic extends PluginsfSimpleForumTopic
 
         parent::delete($con, $latestPost);
     }
+    
+    public function getFeedLink()
+    {
+    	return sfContext::getInstance()->getController()->genUrl('sfSimpleForum/topic?id='.$this->getId().'&stripped_title='.$this->getStrippedTitle(), true);
+    }
 }
