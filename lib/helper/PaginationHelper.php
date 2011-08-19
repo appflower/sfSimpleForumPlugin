@@ -51,5 +51,5 @@ function pager_navigation($pager, $uri, $options = array())
     $navigation .= '<a href="'.url_for($uri.$pager->getLastPage()).'"> <li class="last symbol"></li> </a>';
   }
   
-  return '<div class="'.$css_class.'" id="pagination"><ul>'.$navigation.'</ul></div>';
+  return '<div id="pagination"><ul>'.$navigation.'</ul></div>';
 }
