@@ -83,6 +83,13 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 	protected $stripped_title;
 
 	/**
+	 * The value for the is_resolved field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_resolved;
+
+	/**
 	 * The value for the nb_posts field.
 	 * Note: this column has a database default value of: 0
 	 * @var        int
@@ -165,6 +172,7 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 	{
 		$this->is_sticked = false;
 		$this->is_locked = false;
+		$this->is_resolved = false;
 		$this->nb_posts = 0;
 		$this->nb_views = 0;
 	}
@@ -323,6 +331,16 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 	public function getStrippedTitle()
 	{
 		return $this->stripped_title;
+	}
+
+	/**
+	 * Get the [is_resolved] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsResolved()
+	{
+		return $this->is_resolved;
 	}
 
 	/**
@@ -616,6 +634,26 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 	} // setStrippedTitle()
 
 	/**
+	 * Set the value of [is_resolved] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     sfSimpleForumTopic The current object (for fluent API support)
+	 */
+	public function setIsResolved($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_resolved !== $v || $v === false) {
+			$this->is_resolved = $v;
+			$this->modifiedColumns[] = sfSimpleForumTopicPeer::IS_RESOLVED;
+		}
+
+		return $this;
+	} // setIsResolved()
+
+	/**
 	 * Set the value of [nb_posts] column.
 	 * 
 	 * @param      int $v new value
@@ -666,7 +704,7 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 	public function hasOnlyDefaultValues()
 	{
 			// First, ensure that we don't have any columns that have been modified which aren't default columns.
-			if (array_diff($this->modifiedColumns, array(sfSimpleForumTopicPeer::IS_STICKED,sfSimpleForumTopicPeer::IS_LOCKED,sfSimpleForumTopicPeer::NB_POSTS,sfSimpleForumTopicPeer::NB_VIEWS))) {
+			if (array_diff($this->modifiedColumns, array(sfSimpleForumTopicPeer::IS_STICKED,sfSimpleForumTopicPeer::IS_LOCKED,sfSimpleForumTopicPeer::IS_RESOLVED,sfSimpleForumTopicPeer::NB_POSTS,sfSimpleForumTopicPeer::NB_VIEWS))) {
 				return false;
 			}
 
@@ -675,6 +713,10 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 			}
 
 			if ($this->is_locked !== false) {
+				return false;
+			}
+
+			if ($this->is_resolved !== false) {
 				return false;
 			}
 
@@ -718,8 +760,9 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 			$this->latest_post_id = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
 			$this->user_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->stripped_title = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->nb_posts = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
-			$this->nb_views = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->is_resolved = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
+			$this->nb_posts = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->nb_views = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -729,7 +772,7 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = sfSimpleForumTopicPeer::NUM_COLUMNS - sfSimpleForumTopicPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 13; // 13 = sfSimpleForumTopicPeer::NUM_COLUMNS - sfSimpleForumTopicPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfSimpleForumTopic object", $e);
@@ -1176,9 +1219,12 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 				return $this->getStrippedTitle();
 				break;
 			case 10:
-				return $this->getNbPosts();
+				return $this->getIsResolved();
 				break;
 			case 11:
+				return $this->getNbPosts();
+				break;
+			case 12:
 				return $this->getNbViews();
 				break;
 			default:
@@ -1212,8 +1258,9 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 			$keys[7] => $this->getLatestPostId(),
 			$keys[8] => $this->getUserId(),
 			$keys[9] => $this->getStrippedTitle(),
-			$keys[10] => $this->getNbPosts(),
-			$keys[11] => $this->getNbViews(),
+			$keys[10] => $this->getIsResolved(),
+			$keys[11] => $this->getNbPosts(),
+			$keys[12] => $this->getNbViews(),
 		);
 		return $result;
 	}
@@ -1276,9 +1323,12 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 				$this->setStrippedTitle($value);
 				break;
 			case 10:
-				$this->setNbPosts($value);
+				$this->setIsResolved($value);
 				break;
 			case 11:
+				$this->setNbPosts($value);
+				break;
+			case 12:
 				$this->setNbViews($value);
 				break;
 		} // switch()
@@ -1315,8 +1365,9 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[7], $arr)) $this->setLatestPostId($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setUserId($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setStrippedTitle($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setNbPosts($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setNbViews($arr[$keys[11]]);
+		if (array_key_exists($keys[10], $arr)) $this->setIsResolved($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setNbPosts($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setNbViews($arr[$keys[12]]);
 	}
 
 	/**
@@ -1338,6 +1389,7 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfSimpleForumTopicPeer::LATEST_POST_ID)) $criteria->add(sfSimpleForumTopicPeer::LATEST_POST_ID, $this->latest_post_id);
 		if ($this->isColumnModified(sfSimpleForumTopicPeer::USER_ID)) $criteria->add(sfSimpleForumTopicPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(sfSimpleForumTopicPeer::STRIPPED_TITLE)) $criteria->add(sfSimpleForumTopicPeer::STRIPPED_TITLE, $this->stripped_title);
+		if ($this->isColumnModified(sfSimpleForumTopicPeer::IS_RESOLVED)) $criteria->add(sfSimpleForumTopicPeer::IS_RESOLVED, $this->is_resolved);
 		if ($this->isColumnModified(sfSimpleForumTopicPeer::NB_POSTS)) $criteria->add(sfSimpleForumTopicPeer::NB_POSTS, $this->nb_posts);
 		if ($this->isColumnModified(sfSimpleForumTopicPeer::NB_VIEWS)) $criteria->add(sfSimpleForumTopicPeer::NB_VIEWS, $this->nb_views);
 
@@ -1411,6 +1463,8 @@ abstract class BasesfSimpleForumTopic extends BaseObject  implements Persistent 
 		$copyObj->setUserId($this->user_id);
 
 		$copyObj->setStrippedTitle($this->stripped_title);
+
+		$copyObj->setIsResolved($this->is_resolved);
 
 		$copyObj->setNbPosts($this->nb_posts);
 

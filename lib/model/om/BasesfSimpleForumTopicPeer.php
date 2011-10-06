@@ -19,7 +19,7 @@ abstract class BasesfSimpleForumTopicPeer {
 	const CLASS_DEFAULT = 'plugins.sfSimpleForumPlugin.lib.model.sfSimpleForumTopic';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,9 @@ abstract class BasesfSimpleForumTopicPeer {
 	/** the column name for the STRIPPED_TITLE field */
 	const STRIPPED_TITLE = 'sf_simple_forum_topic.STRIPPED_TITLE';
 
+	/** the column name for the IS_RESOLVED field */
+	const IS_RESOLVED = 'sf_simple_forum_topic.IS_RESOLVED';
+
 	/** the column name for the NB_POSTS field */
 	const NB_POSTS = 'sf_simple_forum_topic.NB_POSTS';
 
@@ -81,11 +84,11 @@ abstract class BasesfSimpleForumTopicPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'IsSticked', 'IsLocked', 'ForumId', 'CreatedAt', 'UpdatedAt', 'LatestPostId', 'UserId', 'StrippedTitle', 'NbPosts', 'NbViews', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'isSticked', 'isLocked', 'forumId', 'createdAt', 'updatedAt', 'latestPostId', 'userId', 'strippedTitle', 'nbPosts', 'nbViews', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::IS_STICKED, self::IS_LOCKED, self::FORUM_ID, self::CREATED_AT, self::UPDATED_AT, self::LATEST_POST_ID, self::USER_ID, self::STRIPPED_TITLE, self::NB_POSTS, self::NB_VIEWS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'is_sticked', 'is_locked', 'forum_id', 'created_at', 'updated_at', 'latest_post_id', 'user_id', 'stripped_title', 'nb_posts', 'nb_views', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'IsSticked', 'IsLocked', 'ForumId', 'CreatedAt', 'UpdatedAt', 'LatestPostId', 'UserId', 'StrippedTitle', 'IsResolved', 'NbPosts', 'NbViews', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'isSticked', 'isLocked', 'forumId', 'createdAt', 'updatedAt', 'latestPostId', 'userId', 'strippedTitle', 'isResolved', 'nbPosts', 'nbViews', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::IS_STICKED, self::IS_LOCKED, self::FORUM_ID, self::CREATED_AT, self::UPDATED_AT, self::LATEST_POST_ID, self::USER_ID, self::STRIPPED_TITLE, self::IS_RESOLVED, self::NB_POSTS, self::NB_VIEWS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'is_sticked', 'is_locked', 'forum_id', 'created_at', 'updated_at', 'latest_post_id', 'user_id', 'stripped_title', 'is_resolved', 'nb_posts', 'nb_views', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -95,11 +98,11 @@ abstract class BasesfSimpleForumTopicPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'IsSticked' => 2, 'IsLocked' => 3, 'ForumId' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'LatestPostId' => 7, 'UserId' => 8, 'StrippedTitle' => 9, 'NbPosts' => 10, 'NbViews' => 11, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'isSticked' => 2, 'isLocked' => 3, 'forumId' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'latestPostId' => 7, 'userId' => 8, 'strippedTitle' => 9, 'nbPosts' => 10, 'nbViews' => 11, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::IS_STICKED => 2, self::IS_LOCKED => 3, self::FORUM_ID => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::LATEST_POST_ID => 7, self::USER_ID => 8, self::STRIPPED_TITLE => 9, self::NB_POSTS => 10, self::NB_VIEWS => 11, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'is_sticked' => 2, 'is_locked' => 3, 'forum_id' => 4, 'created_at' => 5, 'updated_at' => 6, 'latest_post_id' => 7, 'user_id' => 8, 'stripped_title' => 9, 'nb_posts' => 10, 'nb_views' => 11, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'IsSticked' => 2, 'IsLocked' => 3, 'ForumId' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'LatestPostId' => 7, 'UserId' => 8, 'StrippedTitle' => 9, 'IsResolved' => 10, 'NbPosts' => 11, 'NbViews' => 12, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'isSticked' => 2, 'isLocked' => 3, 'forumId' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'latestPostId' => 7, 'userId' => 8, 'strippedTitle' => 9, 'isResolved' => 10, 'nbPosts' => 11, 'nbViews' => 12, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::IS_STICKED => 2, self::IS_LOCKED => 3, self::FORUM_ID => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::LATEST_POST_ID => 7, self::USER_ID => 8, self::STRIPPED_TITLE => 9, self::IS_RESOLVED => 10, self::NB_POSTS => 11, self::NB_VIEWS => 12, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'is_sticked' => 2, 'is_locked' => 3, 'forum_id' => 4, 'created_at' => 5, 'updated_at' => 6, 'latest_post_id' => 7, 'user_id' => 8, 'stripped_title' => 9, 'is_resolved' => 10, 'nb_posts' => 11, 'nb_views' => 12, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -200,6 +203,8 @@ abstract class BasesfSimpleForumTopicPeer {
 		$criteria->addSelectColumn(sfSimpleForumTopicPeer::USER_ID);
 
 		$criteria->addSelectColumn(sfSimpleForumTopicPeer::STRIPPED_TITLE);
+
+		$criteria->addSelectColumn(sfSimpleForumTopicPeer::IS_RESOLVED);
 
 		$criteria->addSelectColumn(sfSimpleForumTopicPeer::NB_POSTS);
 

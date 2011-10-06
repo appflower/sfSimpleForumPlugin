@@ -37,6 +37,7 @@ propel:
     latest_post_id: { type: integer, foreignTable: sf_simple_forum_post, foreignReference: id, onDelete: setnull }
     user_id:       { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: setnull }
     stripped_title: varchar(255)
+    is_resolved:   { type: boolean, default: false }
     nb_posts:      { type: integer, default: 0 }
     nb_views:      { type: integer, default: 0 }
     

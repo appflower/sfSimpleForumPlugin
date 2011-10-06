@@ -82,6 +82,8 @@ class sfSimpleForumTopicMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('STRIPPED_TITLE', 'StrippedTitle', 'VARCHAR', false, 255);
 
+		$tMap->addColumn('IS_RESOLVED', 'IsResolved', 'BOOLEAN', false, null);
+
 		$tMap->addColumn('NB_POSTS', 'NbPosts', 'INTEGER', false, null);
 
 		$tMap->addColumn('NB_VIEWS', 'NbViews', 'INTEGER', false, null);
